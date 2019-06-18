@@ -4,7 +4,7 @@ void Tester::execute() {
     Mocker mocker;
 
     for (int i = 0; i < NUMBER_OF_TESTS; ++i) {
-        unsigned int rows = mocker.generateRandomInt(10);
+        unsigned int rows =mocker.generateRandomInt(10);
         unsigned int columns = mocker.generateRandomInt(10);
         testMatrix<int>(rows, columns);
     }
@@ -16,14 +16,11 @@ void Tester::testMatrix(unsigned int rows, unsigned int columns) {
 
     T **matrix1 = buildMatrix<T>(rows, columns);
     Matrix<T> test1 = setMatrix<T>(matrix1, rows, columns);
-
     unsigned int scalar = mocker.generateRandomInt(10);
     Matrix<T> result = test1 * scalar;
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < columns; ++j) {
+    for (int i = 0; i < rows; ++i)
+        for (int j = 0; j < columns; ++j)
             ASSERT(result(i, j) == matrix1[i][j] * scalar, "There is a problem with the scalar multiplication");
-        }
-    }
 
     int **matrix2 = buildMatrix<T>(rows, columns);
     Matrix<T> test2 = setMatrix<T>(matrix2, rows, columns);
@@ -35,11 +32,18 @@ void Tester::testMatrix(unsigned int rows, unsigned int columns) {
     }
 
     result = test1 - test2;
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < columns; ++j) {
+
+    for (int i = 0; i < rows; ++i)
+        for (int j = 0; j < columns; ++j)
             ASSERT(result(i, j) == matrix1[i][j] - matrix2[i][j], "There is a problem with the subtraction");
-        }
-    }
+
+
+    Matrix<T> tMatrix = result.transpose();
+    for (int i = 0; i < rows; ++i)
+        for (int j = 0; j < columns; ++j)
+            ASSERT(result(i, j) == tMatrix(j,i), "There is a problem with the transpose");
+
+    Matrix<T> pMat = test1 * tMatrix;
 }
 
 template <typename T>
@@ -63,6 +67,7 @@ Matrix<T> Tester::setMatrix(T **&matrix, unsigned int rows, unsigned int columns
             ASSERT(result(i, j) == matrix[i][j], "There is a problem with the set or operator()");
         }
     }
+    //result.print();
 
     return result;
 }

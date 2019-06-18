@@ -5,7 +5,7 @@
 #include <iostream>
 #include <assert.h>
 #include <vector>
-#include <algorithm>   
+#include <algorithm>
 
 #include "../mocker/mocker.h"
 #include "../matrix.h"
