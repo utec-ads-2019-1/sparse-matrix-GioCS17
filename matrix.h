@@ -58,9 +58,7 @@ public:
       nuevo->next=tmpCurrent;
     }
 
-    T operator()(int i,int j) const{
-      unsigned int x=(unsigned int)i;
-      unsigned int y=(unsigned int)j;
+    T operator()(unsigned x,unsigned y) const{
 
       if(x<0 || x>=rows || y<0 ||  y>=columns)
         throw printf("El indice de fila o columna es mayor al permitido");
